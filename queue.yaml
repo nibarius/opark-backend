@@ -1,0 +1,3 @@
+queue:
+- name: queue-wait-list
+  rate: 1/m
