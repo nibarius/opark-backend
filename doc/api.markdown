@@ -1,5 +1,9 @@
 # REST API v1 #
 
+All requests done to this API should have an appropriate User-Agent
+header set. As an example the Opark Android application reports
+"Opark/2.0".
+
 ## Endpoint ##
 Root endpoint: https://opera-park.appspot.com/api/v1/
 
