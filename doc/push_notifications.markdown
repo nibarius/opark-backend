@@ -6,16 +6,14 @@ notifications.
 
 ## Base format ##
 All notifications contains a `type` parameter that tells what type of
-notification it is. The rest of the data in the notification depends
-on what type of notification it is.
+notification it is and a `type_data` parameter with data specific to
+that particular notification type.
 
 ``` json
 {
   "ttl": "72000",
   "type": "available",
-  "type_data": {
-    "free": "6"
-  }
+  "type_data": "eyJmcmVlIjoiMiJ9"
 }
 ```
 
@@ -32,15 +30,15 @@ type_data | string | Mandatory | Data specific for the the given `type`. Data is
 
 Name | Description
 ---- | -----------
-available| Notifications sent when the garage goes from full to not full.
+available| Notifications sent when the garage becomes available.
 
 
 ## available notifications ##
-Notifications sent when the garage goes from full to not full. The
-notification is sent all users who have registered on the wait list to
-be notified about this.
+Notifications sent when the garage becomes available, that is goes from being
+full to not being full. The notification is sent all users who have registered
+on the wait list to be notified about this.
 
-### Type specific parameters ###
+### type_data parameters ###
 
 Name | Type | Mandatory | Description
 ---- | ---- | --------- | -----------
