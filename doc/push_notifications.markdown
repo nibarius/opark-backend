@@ -12,7 +12,7 @@ on what type of notification it is.
 ``` json
 {
   "ttl": "72000",
-  "type": "not_full",
+  "type": "available",
   "type_data": {
     "free": "6"
   }
@@ -32,10 +32,10 @@ type_data | string | Mandatory | Data specific for the the given `type`. Data is
 
 Name | Description
 ---- | -----------
-not_full| Notifications sent when the garage goes from full to not full.
+available| Notifications sent when the garage goes from full to not full.
 
 
-## not_full notifications ##
+## available notifications ##
 Notifications sent when the garage goes from full to not full. The
 notification is sent all users who have registered on the wait list to
 be notified about this.

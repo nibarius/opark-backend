@@ -11,7 +11,7 @@ import (
 const (
 	fcmSendEndpoint  = "https://fcm.googleapis.com/v1/projects/opera-park/messages:send"
 	fcmScope         = "https://www.googleapis.com/auth/firebase.messaging"
-	notificationType = "not_full"
+	notificationType = "available"
 )
 
 type fcm struct {
@@ -31,8 +31,8 @@ type fcmPushRequestBody struct {
 	} `json:"message"`
 }
 
-type NotFullTypeData struct {
-	Free string `json:"free"` //todo: better with int?
+type AvailableTypeData struct {
+	Free string `json:"free"`
 }
 
 func newFcm(context context.Context) *fcm {
@@ -50,8 +50,8 @@ func newPushRequestBody(token string, free string) *fcmPushRequestBody {
 	ret.Message.Data.Ttl = "7200" // 2 hours
 	ret.Message.Data.Type = notificationType
 
-	data, err := json.Marshal(NotFullTypeData{free})
-	handleError(err, "Unable to create JSON for the NotFullTypeData")
+	data, err := json.Marshal(AvailableTypeData{free})
+	handleError(err, "Unable to create JSON for the AvailableTypeData")
 	ret.Message.Data.TypeData = base64.StdEncoding.EncodeToString([]byte(data))
 	return ret
 }
