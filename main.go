@@ -20,21 +20,10 @@ const (
 func init() {
 	http.HandleFunc("/", rootHandler)
 	http.Handle("/api/v1/waitList", alice.New(recoverHandler, requireHTTPS, basicAuth, requirePostOrDelete, requirePushToken).ThenFunc(waitListHandler))
-	//http.HandleFunc("/test", testHandler)
 	http.Handle("/worker/v1/waitList", alice.New(logAndIgnoreErrorsHandler).ThenFunc(workerWaitListHandler))
-
-	/*
-	Endpoints:
-	+ Root, redirect to play store
-
-	Login required:
-	+ register cars (user id + list of cars)
-	+ delete me
-
-	Login not required:
-	+ get avatars (regno + urls to images)
-
-	*/
+	http.Handle("/privacy", alice.New(recoverHandler, requireHTTPS).ThenFunc(privacyHandler))
+	http.Handle("/doc/api", alice.New(recoverHandler, requireHTTPS).ThenFunc(apiHandler))
+	http.Handle("/doc/usage_statistics", alice.New(recoverHandler, requireHTTPS).ThenFunc(usageStatisticsHandler))
 }
 
 var fallbackErrorBody = `{"status":` + string(http.StatusInternalServerError) +
@@ -54,15 +43,16 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "https://play.google.com/store/apps/details?id=se.barsk.park", http.StatusMovedPermanently)
 }
 
+func privacyHandler(w http.ResponseWriter, r *http.Request) {
+	renderDocument(w, PrivacyStatement)
+}
 
-func testHandler(w http.ResponseWriter, r *http.Request) {
-	ctx := appengine.NewContext(r)
-	firestoreClient := NewFirestoreHandle(ctx)
-	defer firestoreClient.close()
-	fmt.Fprintf(w, "firestore token: %v\n", firestoreClient.accessToken)
-	firestoreClient.addToWaitList("my id", "my token")
-	fmt.Fprintf(w, "Wait list: %v\n", firestoreClient.getWaitList())
-	firestoreClient.clearWaitList()
+func apiHandler(w http.ResponseWriter, r *http.Request) {
+	renderDocument(w, Api)
+}
+
+func usageStatisticsHandler(w http.ResponseWriter, r *http.Request) {
+	renderDocument(w, UsageStatistics)
 }
 
 func workerWaitListHandler(w http.ResponseWriter, r *http.Request) {

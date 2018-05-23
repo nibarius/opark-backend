@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {{- if ne .Title "Usage statistics" }}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{- end }}
+    <link rel="stylesheet" href="/static/github-markdown.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/2.1.2/octicons.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.green-red.min.css">
+    <title>Opark - {{ .Title }}</title>
+    <style>
+        .markdown-body {
+            box-sizing: border-box;
+            min-width: 200px;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 45px;
+        }
+
+        @media (max-width: 767px) {
+            .markdown-body {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--no-drawer-button">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">Opark</span>
+                <div class="mdl-layout-spacer"></div>
+                <nav class="mdl-navigation">
+                    <a class="mdl-navigation__link" href="/privacy">Privacy</a>
+                    <a class="mdl-navigation__link" href="/doc/api">API</a>
+                    <a class="mdl-navigation__link" href="/doc/usage_statistics">Stats</a>
+                </nav>
+            </div>
+        </header>
+        <article class="markdown-body">
+            {{ .Body }}
+        </article>
+    </div>
+</body>
+</html>
